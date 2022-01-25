@@ -4,6 +4,7 @@
 #include <iostream>
 #include "RenderWindow.h"
 #include "MainGameLayer.h"
+#include "TitleLayer.h"
 #include "Entity.h"
 #include <vector>
 #include <algorithm>
@@ -53,15 +54,17 @@ int main(int argv, char* args[])
 		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 	}
 
-	RenderWindow window("GAME v1.0", width, height);
+	RenderWindow window("Flapyp SDL", width, height);
 
 	// Load Music
 	Mix_Music* gameMusic = Mix_LoadMUS("../gfx/main_music.mp3");
 
 	MainGameLayer gameLayer(window);
+	TitleLayer titleLayer(window);
 
 	// Init the layers
 	gameLayer.init();
+	titleLayer.init();
 
 	bool running = true;
 
@@ -85,20 +88,26 @@ int main(int argv, char* args[])
 				running = false;
 			}
 
-			if (gameLayer.getAlive())
+			if (titleLayer.getActive())
 			{
-				gameLayer.events(event);
+				titleLayer.events(event);
 			}
 			else
 			{
-				if (event.type == SDL_KEYDOWN)
+				if (gameLayer.getAlive())
 				{
-					gameLayer.init();
+					gameLayer.events(event);
+				} else
+				{
+					if (event.type == SDL_KEYDOWN)
+					{
+						gameLayer.init();
+					}
 				}
 			}
 		}
 
-		if (gameLayer.getAlive())
+		if (gameLayer.getAlive() && !titleLayer.getActive())
 		{
 			gameLayer.update(deltaTime);
 		}
@@ -106,6 +115,10 @@ int main(int argv, char* args[])
 		// Render
 		window.clear();
 		gameLayer.render(deltaTime);
+		if (titleLayer.getActive())
+		{
+			titleLayer.render(deltaTime);
+		}
 		window.display();
 	}
 

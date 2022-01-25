@@ -45,12 +45,6 @@ void MainGameLayer::events(SDL_Event p_event) {
 			jumping = true;
 			Mix_PlayChannel(-1, jumpSound, 0);
 		}
-
-		if (!alive)
-		{
-			// Reset the game here.
-
-		}
 	} else if (p_event.type == SDL_KEYUP)
 	{
 		jumping = false;
