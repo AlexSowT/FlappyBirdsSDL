@@ -12,6 +12,8 @@ Ideas I have practised with:
 _(I likely will not do this as the point of this exercise was to practise some basic ideas)_
 - Improved Title Screen
 - High score system
+- Increasing difficulty
+- Fix bugs such as background tearing and being able to fly over/under the pipes
 
 ## Reference to resources found online
 - Flappy Bird Sprites - https://www.spriters-resource.com/mobile/flappybird/sheet/59894 - Jan 2022
